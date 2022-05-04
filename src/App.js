@@ -8,6 +8,7 @@ import {
 } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore'
 import Thread from './components/Thread';
+import Loading from './components/Loading'
 
 const firebaseConfig = {
   apiKey: 'AIzaSyB9pDOllg2jYhUVUtQuAuP1nt9nyK_Li-M',
@@ -57,7 +58,7 @@ function App() {
     }
   };
 
-  if (initalising) return <p>Loading.....</p>;
+  if (initalising) return <Loading />;
   return (
     <div>
       {user ? (
