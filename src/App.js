@@ -5,8 +5,9 @@ import {
   getAuth,
   GoogleAuthProvider,
   signInWithPopup,
-  signOut,
 } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore'
+import Thread from './components/Thread';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyB9pDOllg2jYhUVUtQuAuP1nt9nyK_Li-M',
@@ -17,8 +18,9 @@ const firebaseConfig = {
   appId: '1:789502414393:web:745e93fd7460549ef247e8',
 };
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+export const app = initializeApp(firebaseConfig);
+export const auth = getAuth(app);
+export const db = getFirestore(app)
 
 function App() {
   const [user, setUser] = useState(() => auth.currentUser);
@@ -62,6 +64,7 @@ function App() {
         <>
           <button onClick={signOut}>Sign Out</button>
           <p>Welcome</p>
+          <Thread user={user} />
         </>
       ) : (
         <button onClick={signInWithGoogle}>Sign In</button>
@@ -69,5 +72,4 @@ function App() {
     </div>
   );
 }
-
 export default App;
