@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { db, auth } from '../App';
 import {
     onSnapshot,
@@ -9,12 +9,15 @@ import {
     doc,
 } from 'firebase/firestore';
 import Message from './Message';
+import Button from '@mui/material/Button';
+import ListItem from '@mui/material/ListItem';
+
 
 export default function Thread() {
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState('');
 
-    const { uid, displayName, photoURL } = auth.currentUser;
+    const { uid, displayName, photoURL, text } = auth.currentUser;
 
     useEffect(() => {
         const collRef = collection(db, 'messages');
@@ -55,14 +58,12 @@ export default function Thread() {
 
     return (
         <div>
-            <ul>
-                {messages &&
-                    messages.map((message) => (
-                        <li key={message.id}>
-                            <Message {...message} />
-                        </li>
-                    ))}
-            </ul>
+            {messages &&
+                messages.map((message) => (
+                    <ListItem alignItems="flex-start">
+                        <Message key={message.id} {...message} />
+                    </ListItem>
+                ))}
             <form onSubmit={handleSubmit}>
                 <input
                     type='text'
@@ -70,10 +71,9 @@ export default function Thread() {
                     onChange={handleChange}
                     placeholder='Type your message here...'
                 />
-                <button type='submit' disabled={!newMessage}>
-                    Send
-                </button>
+
+                <Button color="secondary" type='submit' disabled={!newMessage}>Send</Button>
             </form>
-        </div>
+        </div >
     );
 }

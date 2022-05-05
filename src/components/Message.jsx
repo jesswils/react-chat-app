@@ -1,5 +1,10 @@
 import React from 'react';
 import { formatRelative } from 'date-fns';
+import Avatar from '@mui/material/Avatar';
+import ListItemText from '@mui/material/ListItemText';
+import Typography from '@mui/material/Typography';
+import Divider from '@mui/material/Divider';
+import List from '@mui/material/List';
 
 const Message = ({
     text = '',
@@ -8,19 +13,22 @@ const Message = ({
     createdAt = null,
 }) => {
     return (
-        <div>
+        <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
             {photoURL ? (
-                <img src={photoURL} alt='avatar' width={50} height={50} />
+                <Avatar src={photoURL} alt='avatar' width={50} height={50} sx={{ alignItems: "flex-start" }} />
             ) : null}
-            {displayName ? <p>{displayName}</p> : null}
-            {console.log(createdAt)}
+            {displayName ? <ListItemText primary={displayName}></ListItemText> : null}
             {createdAt?.seconds ? (
-                <span>
-                    {formatRelative(new Date(createdAt.seconds * 1000), new Date())}
-                </span>
+                <ListItemText secondary={formatRelative(new Date(createdAt.seconds * 1000), new Date())}>
+                </ListItemText>
             ) : null}
-            <p>{text}</p>
-        </div>
+            <React.Fragment>
+                <Typography sx={{ display: 'inline' }}
+                    component="span"
+                    variant="body2"
+                    color="text.primary">{text}</Typography>
+            </React.Fragment>
+        </List>
     );
 };
 
