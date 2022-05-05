@@ -9,6 +9,7 @@ import {
 import { getFirestore } from 'firebase/firestore'
 import Thread from './components/Thread';
 import Loading from './components/Loading'
+import Button from '@mui/material/Button';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyB9pDOllg2jYhUVUtQuAuP1nt9nyK_Li-M',
@@ -63,12 +64,16 @@ function App() {
     <div>
       {user ? (
         <>
-          <button onClick={signOut}>Sign Out</button>
+          <Button variant="outlined" href="#outlined-buttons" onClick={signOut}>
+            Sign Out
+          </Button>
           <p>Welcome</p>
           <Thread user={user} />
         </>
       ) : (
-        <button onClick={signInWithGoogle}>Sign In</button>
+        <Button variant="outlined" href="#outlined-buttons" onClick={signInWithGoogle}>
+          Sign In
+        </Button>
       )}
     </div>
   );
