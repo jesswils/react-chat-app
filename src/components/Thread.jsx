@@ -11,13 +11,15 @@ import {
 import Message from './Message';
 import Button from '@mui/material/Button';
 import ListItem from '@mui/material/ListItem';
+import TextField from '@mui/material/TextField';
+import SendIcon from '@mui/icons-material/Send';
 
 
 export default function Thread() {
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState('');
 
-    const { uid, displayName, photoURL, text } = auth.currentUser;
+    const { uid, displayName, photoURL } = auth.currentUser;
 
     useEffect(() => {
         const collRef = collection(db, 'messages');
@@ -65,15 +67,13 @@ export default function Thread() {
                     </ListItem>
                 ))}
             <form onSubmit={handleSubmit}>
-                <input
-                    type='text'
-                    value={newMessage}
+                <TextField id="outlined-basic" label="Type your message here..." variant="outlined" value={newMessage}
                     onChange={handleChange}
-                    placeholder='Type your message here...'
                 />
-
-                <Button color="secondary" type='submit' disabled={!newMessage}>Send</Button>
+                <Button type='submit' variant="outlined" endIcon={<SendIcon />} disabled={!newMessage} sx={{
+                    height: 56,
+                }}>Send</Button>
             </form>
-        </div >
+        </div>
     );
 }
