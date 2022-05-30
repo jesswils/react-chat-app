@@ -1,14 +1,13 @@
 import { useState, useEffect } from 'react';
 import './App.css';
 import { initializeApp } from 'firebase/app';
-import {
-  getAuth,
-  GoogleAuthProvider,
-  signInWithPopup,
-} from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore'
+import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
 import Thread from './components/Thread';
-import Loading from './components/Loading'
+import Loading from './components/Loading';
+import Button from '@mui/material/Button';
+import { Typography } from '@mui/material';
+import logo from './assets/speech-bubble.png';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyB9pDOllg2jYhUVUtQuAuP1nt9nyK_Li-M',
@@ -21,7 +20,7 @@ const firebaseConfig = {
 
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
-export const db = getFirestore(app)
+export const db = getFirestore(app);
 
 function App() {
   const [user, setUser] = useState(() => auth.currentUser);
@@ -63,12 +62,40 @@ function App() {
     <div>
       {user ? (
         <>
-          <button onClick={signOut}>Sign Out</button>
-          <p>Welcome</p>
-          <Thread user={user} />
+          <h1 className='header'>Public message board</h1>
+          <div className='app'>
+            <Thread user={user} />
+
+          </div>
+          <div className='sign-out-btn'>
+            <Button
+              variant='outlined'
+              href='#outlined-buttons'
+              onClick={signOut}
+              color="error"
+            >
+              Sign Out
+            </Button>
+          </div>
+          <div className='footer-wrapper'><Typography variant="body2">Built with React and Firebase. Icons from <a href='https://www.flaticon.com/free-icons/speech-bubble'>Freepik</a></Typography>
+          </div>
         </>
       ) : (
-        <button onClick={signInWithGoogle}>Sign In</button>
+        <div className='welcome'>
+          <h1 className='welcome-text'>Welcome</h1>
+          <img src={logo} alt='chat-icon' height='300' />
+          <Typography variant='body1'>
+            Sign in with your Google account
+          </Typography>
+          <br></br>
+          <Button
+            variant='outlined'
+            href='#outlined-buttons'
+            onClick={signInWithGoogle}
+          >
+            Sign In
+          </Button>
+        </div>
       )}
     </div>
   );

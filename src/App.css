@@ -1,1 +1,26 @@
+.app {
+	display: flex;
+	justify-content: center;
+}
 
+.header {
+	text-align: center;
+	background-color: black;
+	width: 25%;
+	margin-left: 17em;
+	color: white;
+}
+
+.welcome {
+	text-align: center;
+}
+
+.footer-wrapper {
+	margin-top: 2em;
+	text-align: center;
+}
+
+.sign-out-btn {
+	margin-top: 2em;
+	text-align: center;
+}

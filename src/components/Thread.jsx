@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { db, auth } from '../App';
 import {
     onSnapshot,
@@ -9,6 +9,11 @@ import {
     doc,
 } from 'firebase/firestore';
 import Message from './Message';
+import Button from '@mui/material/Button';
+import ListItem from '@mui/material/ListItem';
+import TextField from '@mui/material/TextField';
+import SendIcon from '@mui/icons-material/Send';
+
 
 export default function Thread() {
     const [messages, setMessages] = useState([]);
@@ -55,24 +60,19 @@ export default function Thread() {
 
     return (
         <div>
-            <ul>
-                {messages &&
-                    messages.map((message) => (
-                        <li key={message.id}>
-                            <Message {...message} />
-                        </li>
-                    ))}
-            </ul>
+            {messages &&
+                messages.map((message) => (
+                    <ListItem alignItems="flex-start">
+                        <Message key={message.id} {...message} />
+                    </ListItem>
+                ))}
             <form onSubmit={handleSubmit}>
-                <input
-                    type='text'
-                    value={newMessage}
+                <TextField id="outlined-basic" label="Type your message here..." variant="outlined" value={newMessage}
                     onChange={handleChange}
-                    placeholder='Type your message here...'
                 />
-                <button type='submit' disabled={!newMessage}>
-                    Send
-                </button>
+                <Button type='submit' variant="outlined" endIcon={<SendIcon />} disabled={!newMessage} sx={{
+                    height: 56,
+                }}>Send</Button>
             </form>
         </div>
     );
